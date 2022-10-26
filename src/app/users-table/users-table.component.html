@@ -1,0 +1,23 @@
+<div class="container">
+  <button class="addUserBtn" (click)="addUser()">
+    Add a new user
+  </button>
+  <div class="header">
+    <p>First Name</p>
+    <p>Last Name</p>
+    <p>Email</p>
+    <p>Age</p>
+    <p>Gender</p>
+  </div>
+  <div *ngFor="let user of users">
+    <app-user-row
+      [user]="user"
+      (create)="onCreated($event)"
+      (update)="onUpdated($event)"
+      (delete)="onDeleted($event)"
+      [onCreatedBegin]="onCreatedBegin.asObservable()"
+      [onCreatedSuccess]="onCreatedSuccess.asObservable()"
+      [onUpdatedSuccess]="onUpdatedSuccess.asObservable()"
+    ></app-user-row>
+  </div>
+</div>

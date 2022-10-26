@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  height: 25px;
+}
+.container > div {
+  height: 25px;
+}
+.container > div > input {
+  width: 180px;
+  height: 100%;
+  box-sizing: border-box;
+}
+.btn {
+  width: 25px;
+  height: 25px;
+}
+.editedInput, textarea {
+  background-color : #d1d1d1;
+}

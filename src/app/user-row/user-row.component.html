@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="editedRow">
+    <input
+      [ngClass]="{'editedInput': !isReadOnly}"
+      type="text"
+      placeholder="First Name"
+      [value]="user.firstname"
+      #firstname
+      (change)="user.firstname = firstname.value"
+      [readonly]="isReadOnly"
+      required>
+    <input
+      [ngClass]="{'editedInput': !isReadOnly}"
+      type="text"
+      placeholder="Last Name"
+      [value]="user.lastname"
+      #lastname
+      (change)="user.lastname = lastname.value"
+      [readonly]="isReadOnly"
+      required>
+    <input
+      [ngClass]="{'editedInput': !isReadOnly}"
+      type="email"
+      placeholder="Email"
+      [value]="user.email"
+      #email
+      (change)="user.email = email.value"
+      [readonly]="isReadOnly"
+      required>
+    <input
+      [ngClass]="{'editedInput': !isReadOnly}"
+      type="number"
+      placeholder="Age"
+      [value]="user.age"
+      #age
+      (change)="user.age = +age.value"
+      [readonly]="isReadOnly"
+      required>
+    <input
+      [ngClass]="{'editedInput': !isReadOnly}"
+      type="text"
+      placeholder="Gender"
+      [value]="user.gender"
+      [readonly]="isReadOnly"
+      #gender
+      (change)="changeGender(gender.value)"
+      required>
+  </div>
+  <button class="btn" *ngIf="isReadOnly" (click)="editUser()">
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+  </button>
+  <button class="btn" *ngIf="!isReadOnly" (click)="saveUser()">
+    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+  </button>
+  <button class="btn" (click)="deleteUser()">
+    <i class="fa fa-trash" aria-hidden="true"></i>
+  </button>
+</div>
