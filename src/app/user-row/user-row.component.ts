@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
-import { User, UserGender } from '../../domain/User'
+import { UserViewModel } from 'src/viewModel/UserViewModel';
+import { isDefaultUser } from 'src/domain/User';
+import { UserGender } from 'src/domain/UserGender';
+import { RequestStatus } from 'src/providers/RequestStatus';
 
 @Component({
   selector: 'app-user-row',
@@ -9,62 +13,58 @@ import { User, UserGender } from '../../domain/User'
   styleUrls: ['./user-row.component.css']
 })
 export class UserRowComponent implements OnInit, OnDestroy {
-  @Input() user!: User;
-  @Input() onUpdatedSuccess!: Observable<void>;
-  @Input() onCreatedBegin!: Observable<void>;
-  @Input() onCreatedSuccess!: Observable<void>;
+  @Input() user!: UserViewModel;
 
-  @Output() create = new EventEmitter<User>();
-  @Output() update = new EventEmitter<User>();
+  @Input() onChangedRequestStatus!: Observable<RequestStatus>;
+  @Input() onUpdatedSuccess!: Observable<string>;
+  @Input() onCreatedSuccess!: Observable<string>;
+
+  @Output() create = new EventEmitter<UserViewModel>();
+  @Output() update = new EventEmitter<UserViewModel>();
   @Output() delete = new EventEmitter<string>();
 
-  isReadOnly: boolean = true;
+  genderOptions: UserGender[] = [];
+  isLoading: boolean = false;
 
+  private onChangedRequestStatusSubscription!: Subscription;
   private onUpdatedSubscription!: Subscription;
-  private onCreatedBeginSubscription!: Subscription;
   private onCreatedSubscription!: Subscription;
 
-  ngOnInit() {
-    this.onUpdatedSubscription = this.onUpdatedSuccess.subscribe(
-      () => this.isReadOnly = true
-    );
-    this.onCreatedBeginSubscription = this.onCreatedBegin.subscribe(
-      () => {
-        if (this.user._id === '') {
-          this.isReadOnly = false
-        }
+  ngOnInit(): void {
+    this.onChangedRequestStatusSubscription = this.onChangedRequestStatus.subscribe(
+      (status: RequestStatus) => {
+        this.isLoading = (status === 'loading');
       }
     );
-    this.onCreatedSubscription = this.onCreatedSuccess.subscribe(
-      () => this.isReadOnly = true
+    this.onUpdatedSubscription = this.onUpdatedSuccess.subscribe(
+      (userId) => this.toggleEditedStatus(userId)
     );
+    this.onCreatedSubscription = this.onCreatedSuccess.subscribe(
+      (userId) => this.toggleEditedStatus(userId)
+    );
+
+    this.genderOptions = Object.values(UserGender);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.onUpdatedSubscription.unsubscribe();
-    this.onCreatedBeginSubscription.unsubscribe();
     this.onCreatedSubscription.unsubscribe();
   }
 
-  changeGender(value: string) {
-    switch (value) {
-      case UserGender.male:
-        this.user.gender = UserGender.male;
-        break;
-      case UserGender.female:
-        this.user.gender = UserGender.female;
-        break;
-      default:
-        this.user.gender = UserGender.unknown;
-      }
+  onEdit() {
+    this.user.isEdited = true;
   }
 
-  editUser() {
-    this.isReadOnly = false;
+  onDelete() {
+    this.delete.emit(this.user._id)
   }
 
-  saveUser() {
-    if (this.user._id === '') {
+  onSubmit(profile: NgForm) {
+    if (!profile.valid) {
+      return;
+    }
+
+    if (isDefaultUser(this.user._id)) {
       this.create.emit({...this.user});
       return;
     }
@@ -72,7 +72,13 @@ export class UserRowComponent implements OnInit, OnDestroy {
     this.update.emit({...this.user})
   }
 
-  deleteUser() {
-    this.delete.emit(this.user._id)
+  onChangeGender(value: UserGender) {
+    this.user.gender = value;
+  }
+
+  private toggleEditedStatus(userId: string) {
+    if (this.user._id === userId) {
+      this.user.isEdited = !this.user.isEdited;
+    }
   }
 }
