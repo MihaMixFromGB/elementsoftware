@@ -1,0 +1,111 @@
+.container {
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.successMessage {
+  color: #669400;
+}
+.errorMessage {
+  color: #ff3232;
+}
+
+.dt {
+  display: grid;
+  grid-template-rows: min-content min-content 1fr;
+  height: 100%;
+  box-shadow: 0px 0px 0px 1px rgba(152, 161, 178, 0.1), 0px 1px 4px rgba(69, 75, 87, 0.12), 0px 0px 2px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: #FFFFFF;
+  /* box-sizing: border-box; */
+}
+.dt__topToolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+  background: #F9FAFC;
+  border-radius: 8px 8px 0 0;
+}
+.dt__topToolbar__errorMessage {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  width: 80%;
+
+  box-sizing: border-box;
+}
+.dt__topToolbar__errorMessage > span {
+  text-align: center;
+  font-size: 14px;
+}
+.dt__topToolbar__addBtn {
+  height: 32px;
+  width: 128px;
+  padding: 6px 12px;
+  background: #2264E6;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 0px 0px 1px #2264E6, 0px 2px 5px rgba(34, 100, 230, 0.12), inset 0px 1px 0px #4B85FA;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+}
+
+.dt__header {
+  display: grid;
+  grid-template-columns: repeat(3, 3fr) 1fr 1.5fr 50px;
+  column-gap: 16px;
+  padding: 8px;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #464F60;
+  background: #F9FAFC;
+}
+.dt__content {
+  overflow-y: auto;
+}
+.dt__item:nth-child(2n) {
+  background: #F9FAFC;
+}
+
+.dt__content::-webkit-scrollbar-track
+{
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+.dt__content::-webkit-scrollbar
+{
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+.dt__content::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #afafaf;
+}
+
+@media screen and (max-width: 700px) {
+  .dt {
+    grid-template-rows: min-content 1fr;
+  }
+  .dt__topToolbar {
+    flex-direction: column;
+  }
+  .dt__topToolbar__addBtn {
+    width: 100%;
+  }
+  .dt__header {
+    display: none;
+  }
+  .dt__item {
+    margin-bottom: 10px;
+  }
+}

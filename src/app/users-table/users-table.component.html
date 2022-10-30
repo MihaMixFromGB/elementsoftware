@@ -1,0 +1,42 @@
+<div class="container">
+  <app-preloader *ngIf="status === 'loading'"></app-preloader>
+  <div class="dt">
+    <div class="dt__topToolbar">
+      <div *ngIf="serviceMessage !== null" class="dt__topToolbar__errorMessage">
+        <span class="text-regular"
+              [ngClass]="{'successMessage': serviceMessage.type === 'success',
+                          'errorMessage': serviceMessage.type === 'error'}">
+          {{serviceMessage.text}}
+        </span>
+      </div>
+      <button
+          [disabled]="status === 'loading'"
+          class="dt__topToolbar__addBtn refElement text-medium"
+          (click)="addUser()"
+      >
+        + Add user
+      </button>
+    </div>
+    <div class="dt__header text-semibold">
+      <span>First Name</span>
+      <span>Last Name</span>
+      <span>Email</span>
+      <span>Age</span>
+      <span>Gender</span>
+      <span></span>
+    </div>
+    <div class="dt__content">
+      <div class="dt__item" *ngFor="let user of users">
+        <app-user-row
+          [user]="user"
+          (create)="onCreated($event)"
+          (update)="onUpdated($event)"
+          (delete)="onDeleted($event)"
+          [onChangedRequestStatus]="onChangedRequestStatus.asObservable()"
+          [onCreatedSuccess]="onCreatedSuccess.asObservable()"
+          [onUpdatedSuccess]="onUpdatedSuccess.asObservable()"
+        ></app-user-row>
+      </div>
+    </div>
+  </div>
+</div>

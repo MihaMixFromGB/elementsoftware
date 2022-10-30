@@ -1,0 +1,124 @@
+<form
+  #userProfile="ngForm"
+  (ngSubmit)="onSubmit(userProfile)"
+>
+  <div class="container">
+    <div class="form-group form-group-container">
+      <label class="text-semibold" for="firstname">First Name:</label>
+      <input
+        id="firstname"
+        class="form-control readableInput text-regular"
+        [ngClass]="{isEdited: user.isEdited}"
+        type="text"
+        placeholder="First Name"
+        [(ngModel)]="user.firstname"
+        name="firstname"
+        [readonly]="!user.isEdited"
+        required
+        pattern="[a-zA-Z]+$"
+        #firstname="ngModel">
+      <p *ngIf="firstname.invalid && firstname.touched"
+          class="validatingMessage text-regular">
+        First Name must contain only letters
+      </p>
+    </div>
+    <div class="form-group form-group-container">
+      <label class="text-semibold" for="lastname">Last Name:</label>
+      <input
+        id="lastname"
+        class="form-control readableInput text-regular"
+        [ngClass]="{isEdited: user.isEdited}"
+        type="text"
+        placeholder="Last Name"
+        [(ngModel)]="user.lastname"
+        name="lastname"
+        [readonly]="!user.isEdited"
+        required
+        pattern="[a-zA-Z]+$"
+        #lastname="ngModel">
+        <p *ngIf="lastname.invalid && lastname.touched"
+            class="validatingMessage text-regular">
+          Last Name must contain only letters
+        </p>
+    </div>
+    <div class="form-group form-group-container">
+      <label class="text-semibold" for="email">Email:</label>
+      <input
+        id="email"
+        class="form-control readableInput text-regular"
+        [ngClass]="{isEdited: user.isEdited}"
+        type="email"
+        placeholder="Email"
+        name="email"
+        [(ngModel)]="user.email"
+        [readonly]="!user.isEdited"
+        required
+        email
+        #email="ngModel">
+        <p *ngIf="email.invalid && email.touched"
+            class="validatingMessage text-regular">
+          Invalid value
+        </p>
+    </div>
+    <div class="form-group form-group-container">
+      <label class="text-semibold" for="age">Age:</label>
+      <input
+        id="age"
+        class="form-control readableInput text-regular"
+        [ngClass]="{isEdited: user.isEdited}"
+        type="number"
+        placeholder="Age"
+        name="age"
+        [(ngModel)]="user.age"
+        [readonly]="!user.isEdited"
+        required
+        min="1"
+        #age="ngModel">
+      <p *ngIf="age.invalid && age.touched"
+          class="validatingMessage text-regular">
+        Invalid
+      </p>
+    </div>
+    <div *ngIf="!user.isEdited" class="form-group form-group-container">
+      <label class="text-semibold" for="gender">Gender:</label>
+      <input
+        id="gender"
+        class="form-control readableInput text-regular"
+        type="text"
+        placeholder="Gender"
+        name="gender"
+        [(ngModel)]="user.gender"
+        [readonly]="!user.isEdited"
+        required>
+    </div>
+    <div *ngIf="user.isEdited" class="form-group form-group-container">
+      <label class="text-semibold" for="genderSelector">Gender:</label>
+      <select
+        id="genderSelector"
+        class="form-control text-regular"
+        #genderSel="ngModel"
+        [(ngModel)]="user.gender"
+        name="gender"
+        (ngModelChange)="onChangeGender(genderSel.value)"
+      >
+        <option
+          *ngFor="let gender of genderOptions"
+          [value]="gender"
+        >{{gender}}</option>
+      </select>
+    </div>
+    <div class="sideToolbar" [ngClass]="{isEditedForm: user.isEdited}">
+      <button [disabled]="isLoading" class="refElement" *ngIf="!user.isEdited" (click)="onEdit()">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        <span>Edit</span>
+      </button>
+      <button [disabled]="isLoading" class="refElement" *ngIf="user.isEdited" type="submit">
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+      </button>
+      <button [disabled]="isLoading" class="refElement" (click)="onDelete()">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        <span>Delete</span>
+      </button>
+    </div>
+  </div>
+</form>

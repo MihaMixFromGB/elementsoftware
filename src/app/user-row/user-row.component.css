@@ -1,0 +1,118 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 3fr) 1fr 1.5fr 50px;
+  column-gap: 16px;
+  padding: 8px;
+}
+
+.form-group-container {
+  display: flex;
+  flex-direction: column;
+}
+.form-group > label {
+  display: none;
+}
+
+input.form-control {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  color: #464F60;
+}
+.readableInput {
+  border:0;
+  outline:0;
+  background: transparent;
+}
+.isEdited {
+  border: 1px solid grey;
+  border-radius: 16px;
+  padding-left: 6px;
+  box-sizing: border-box;
+}
+
+#genderSelector {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  color: #464F60;
+  border-radius: 16px;
+  background: transparent;
+}
+#genderSelector:focus {
+  outline: none;
+}
+
+.sideToolbar {
+  display: none;
+}
+.container:hover .sideToolbar, .isEditedForm {
+  display: flex;
+  align-items: flex-start;
+  padding-left: 6px;
+}
+.sideToolbar > button {
+  width: 20px;
+  height: 20px;
+  background: #2264E6;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 0px 0px 1px #2264E6, 0px 2px 5px rgba(34, 100, 230, 0.12), inset 0px 1px 0px #4B85FA;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  margin-right: 4px;
+}
+.sideToolbar > button:last-child {
+  margin-right: 0;
+}
+.sideToolbar > button > span {
+  display: none;
+}
+
+.validatingMessage {
+  padding: 8px 4px 0 0;
+  font-size: 14px;
+  color: #ff3232;
+}
+
+@media screen and (max-width: 700px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .form-group > label {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #464F60;
+  }
+  .form-group-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 8px;
+  }
+
+  .sideToolbar {
+    display: flex;
+    padding-top: 4px;
+  }
+  .container:hover .sideToolbar, .isEditedForm {
+    padding-left: 0;
+  }
+  .sideToolbar > button {
+    width: 100%;
+    height: 32px;
+  }
+  .sideToolbar > button > span {
+    display: inline;
+    margin-left: 6px;
+  }
+  .validatingMessage {
+    padding-top: 0;
+  }
+}
