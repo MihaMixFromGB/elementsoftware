@@ -2,8 +2,8 @@
   <app-preloader *ngIf="status === 'loading'"></app-preloader>
   <div class="dt">
     <div class="dt__topToolbar">
-      <div *ngIf="serviceMessage !== null" class="dt__topToolbar__errorMessage">
-        <span class="text-regular"
+      <div class="dt__topToolbar__errorMessage">
+        <span *ngIf="serviceMessage !== null" class="text-regular"
               [ngClass]="{'successMessage': serviceMessage.type === 'success',
                           'errorMessage': serviceMessage.type === 'error'}">
           {{serviceMessage.text}}

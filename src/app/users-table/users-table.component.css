@@ -99,6 +99,9 @@
   .dt__topToolbar {
     flex-direction: column;
   }
+  .dt__topToolbar__errorMessage {
+    width: 100%;
+  }
   .dt__topToolbar__addBtn {
     width: 100%;
   }
